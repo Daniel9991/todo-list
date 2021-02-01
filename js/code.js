@@ -1,16 +1,42 @@
+function task(name, description){
+	this.name = name;
+	this.description = description;
+	this.state = "undone";
+	this.added_date = new Date();
+}
+
 const elements_list = [];
 
 const no_task_info = document.querySelector("#no-task-info");
 const task_list = document.querySelector("#task-list");
-
-const task_input = document.querySelector("#task-input");
-task_input.addEventListener("keyup", (ev) => {
+const name_input = document.querySelector("#name-input");
+const description_input = document.querySelector("#description-input");
+name_input.addEventListener("keyup", (ev) => {
 	if(ev.keyCode === 13){
-		createTask();
+		if(name_input.value === ""){
+			alert("You can't create a task without a name.")
+		}
+		else{
+			if(modify_list === true){
+				createTask();
+			}
+		}
 	}
 });
 const submit_button = document.querySelector('#submit-button');
-submit_button.addEventListener("click", createTask);
+submit_button.addEventListener("click", () => {
+	if(name_input.value === ""){
+		alert("You can't create a task without a name.")
+	}
+	else{
+		if(modify_list === true){
+			createTask();
+		}
+	}
+});
+
+//This variable will be checked before creating or deleting an element so that processes don't overlap
+let modify_list = true;
 
 
 
@@ -36,49 +62,63 @@ function checkListVisibility(){
 is puts the text span and the button span inside it,
 append the item to the actual list. */
 function createTask(){
-	elements_list.push(task_input.value);
+
+	modify_list = false;
+
+	n = name_input.value;
+	d = description_input.value;
+	elements_list.push(new task(n, d));
+
 	let new_li = document.createElement("li");
-	new_li.className = "list-element";
+	new_li.id = elements_list.length - 1;
+	new_li.className = "list-item";
+
+	let check_span = document.createElement("span");
+	check_span.className = "check-button";
+	check_span.innerHTML = "&check;";
+	check_span.addEventListener("click", ev => {
+		let index = ev.target.parentElement.id;
+		let t = elements_list[index];
+		if(t.state === "undone"){
+			ev.target.style.color = "#0f0";
+			t.state = "done";
+		}
+	});
+	new_li.appendChild(check_span);
+
+	let wrapper = document.createElement("div");
+	wrapper.className = "text-span-wrapper";
+	wrapper.addEventListener("click", ev => {
+		displayModalBox(Number(ev.target.parentElement.id));
+	});
 
 	let text_span = document.createElement("span");
-	text_span.className = "text-span"
-	text_span.textContent = task_input.value;
-	new_li.appendChild(text_span);
+	text_span.className = "text-span";
+	text_span.textContent = name_input.value;
+	wrapper.appendChild(text_span)
+	new_li.appendChild(wrapper);
 
 	let close_span = document.createElement("span");
-	close_span.id = `${elements_list.length}-close-button`;
 	close_span.className = "close-button";
-	close_span.innerHTML = "&times;";
-	close_span.addEventListener("click", (ev) => {
-		eliminateTask(ev.target.id);
+	close_span.innerHTML = "X";
+	close_span.addEventListener("click", ev => {
+		if(modify_list === true){
+			eliminateTask(ev.target.parentElement);
+		}
 	})
 	new_li.appendChild(close_span);
 
 	task_list.appendChild(new_li);
 	setTimeout(function(){new_li.style.width = "100%";}, 1);
-	//growLi(new_li);
+	setTimeout(function(){close_span.style.visibility = "visible";}, 1200);
 
-	task_input.value = "";
+	name_input.value = "";
+	description_input.value = "";
 
 	checkListVisibility();
+	modify_list = true;
+	
 }
-
-
-/*
-function growLi(li){
-	width = 0;
-	let interval = setInterval(grow, 12);
-	function grow(){
-		if(width >= 100){
-			clearInterval(interval);
-		}
-		else{
-			width++;
-			li.style.width = `${width}%`;
-		}
-	}
-}
-*/
 
 
 
@@ -86,43 +126,68 @@ function growLi(li){
 which is then used to eliminate the task from the list
 and select the corresponding dom element, which is removed.
 Then all remaining buttons get a new id. */
-function eliminateTask(id){
+function eliminateTask(li){
 
-	index = Number(id[0]) - 1;
-	elements_list.splice(index, 1)
-	let to_be_removed = document.querySelector(`#task-list li:nth-child(${id[0]})`);
-	to_be_removed.style.width = "0";
-	//shrinkLi(to_be_removed); //And remove li at the end.
+	modify_list = false;
+
+	elements_list.splice(li.id, 1)
+
+	li.style.width = "0";
 
 	setTimeout(function(){
-		task_list.removeChild(to_be_removed);
-		let all_close_button = document.querySelectorAll(".close-button");
+		task_list.removeChild(li);
+		let all_list_items = document.querySelectorAll(".list-item");
 		for(let i = 0; i < elements_list.length; i++){
-			all_close_button[i].id = `${i + 1}-close-button`;
+			all_list_items[i].id = i;
 		}
 		checkListVisibility();
-	}, 1000);
-	
+		modify_list = true;
+	}, 800);
 }
 
-/*
-function shrinkLi(li){
-	width = 100;
-	let interval = setInterval(shrink, 12);
-	function shrink(){
-		if(width <= 0){
-			clearInterval(interval);
-			task_list.removeChild(li);
-			let all_close_button = document.querySelectorAll(".close-button");
-			for(let i = 0; i < elements_list.length; i++){
-				all_close_button[i].id = `${i + 1}-close-button`;
-			}
-			checkListVisibility();
-		}
-		else{
-			width--;
-			li.style.width = `${width}%`;
-		}
-	}
+
+
+const modal_box = document.querySelector("#modal-box");
+const modal_name = document.querySelector("#modal-name");
+const modal_state = document.querySelector("#modal-state");
+const modal_added_date = document.querySelector("#modal-added-date");
+const modal_description = document.querySelector("#modal-description");
+const modal_close = document.querySelector("#modal-close");
+modal_close.addEventListener("click", () => {
+	modal_box.style.display = "none";
+});
+
+function displayModalBox(index){
+	let t = elements_list[index];
+	modal_name.textContent = `Name: ${t.name}`;
+	modal_state.textContent = `State: ${t.state}`;
+	let date_info = `${t.added_date.getHours()}:${t.added_date.getMinutes()} ${t.added_date.getDate()}-${t.added_date.getMonth()}-${t.added_date.getFullYear()}`
+	modal_added_date.textContent = `Date Created: ${date_info}`;
+	modal_description.textContent = `Name: ${t.description}`;
+	modal_box.style.display = "block"
 }
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
