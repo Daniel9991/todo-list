@@ -10,7 +10,6 @@ const elements_list = [];
 const no_task_info = document.querySelector("#no-task-info");
 const task_list = document.querySelector("#task-list");
 const name_input = document.querySelector("#name-input");
-const description_input = document.querySelector("#description-input");
 name_input.addEventListener("keyup", (ev) => {
 	if(ev.keyCode === 13){
 		if(name_input.value === ""){
@@ -22,6 +21,23 @@ name_input.addEventListener("keyup", (ev) => {
 			}
 		}
 	}
+});
+const description_input = document.querySelector("#description-input");
+description_input.addEventListener("keyup", ev => {
+	if(ev.keyCode === 13){
+		if(name_input.value === ""){
+			alert("You can't create a task without a name.")
+		}
+		else{
+			if(modify_list === true){
+				createTask();
+			}
+		}
+	}
+});
+description_input.addEventListener("focus", ev => {
+	ev.target.style.color = "#000";
+	ev.target.value = "";
 });
 const submit_button = document.querySelector('#submit-button');
 submit_button.addEventListener("click", () => {
@@ -65,8 +81,9 @@ function createTask(){
 
 	modify_list = false;
 
-	n = name_input.value;
-	d = description_input.value;
+	let n = name_input.value;
+	console.log(description_input.value)
+	let d = (description_input.value === "Add a description...") ? "None" : description_input.value;
 	elements_list.push(new task(n, d));
 
 	let new_li = document.createElement("li");
@@ -80,7 +97,7 @@ function createTask(){
 		let index = ev.target.parentElement.id;
 		let t = elements_list[index];
 		if(t.state === "undone"){
-			ev.target.style.color = "#0f0";
+			ev.target.style.color = "#76ff03";
 			t.state = "done";
 		}
 	});
@@ -113,7 +130,8 @@ function createTask(){
 	setTimeout(function(){close_span.style.visibility = "visible";}, 1200);
 
 	name_input.value = "";
-	description_input.value = "";
+	description_input.value = "Add a description...";
+	description_input.style.color = "#777";
 
 	checkListVisibility();
 	modify_list = true;
@@ -133,6 +151,7 @@ function eliminateTask(li){
 	elements_list.splice(li.id, 1)
 
 	li.style.width = "0";
+	li.children[2].style.visibility = "hidden";
 
 	setTimeout(function(){
 		task_list.removeChild(li);
@@ -159,11 +178,12 @@ modal_close.addEventListener("click", () => {
 
 function displayModalBox(index){
 	let t = elements_list[index];
-	modal_name.textContent = `Name: ${t.name}`;
-	modal_state.textContent = `State: ${t.state}`;
-	let date_info = `${t.added_date.getHours()}:${t.added_date.getMinutes()} ${t.added_date.getDate()}-${t.added_date.getMonth()}-${t.added_date.getFullYear()}`
-	modal_added_date.textContent = `Date Created: ${date_info}`;
-	modal_description.textContent = `Name: ${t.description}`;
+	modal_name.innerHTML = `<span class="modal-category">Name:</span> ${t.name}`;
+	let color = (t.state === "undone") ? "#c62828" : "#2e7232";
+	modal_state.innerHTML = `<span class="modal-category">State:</span> <span style="color: ${color};">${t.state}</span>`;
+	let date_info = `${t.added_date.getDate()}/${t.added_date.getMonth()}/${t.added_date.getFullYear()}  at  ${t.added_date.getHours()}:${t.added_date.getMinutes()}`
+	modal_added_date.innerHTML = `<span class="modal-category">Date Created:</span> ${date_info}`;
+	modal_description.innerHTML = `<span class="modal-category">Description:</span> ${t.description}`;
 	modal_box.style.display = "block"
 }
 

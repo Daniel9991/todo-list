@@ -9,19 +9,16 @@
 <body>
 	<div id="modal-box">
 		<div id="modal-info-box">
-			<p id="modal-name"></p>
-			<p id="modal-state"></p>
-			<p id="modal-added-date"></p>
-			<p id="modal-description"></p>
-			<button id="modal-close">Close</button>
+			<p id="modal-name" class="modal-info-element"></p>
+			<p id="modal-state" class="modal-info-element"></p>
+			<p id="modal-added-date" class="modal-info-element"></p>
+			<p id="modal-description" class="modal-info-element"></p>
 		</div>
+		<p id="modal-close">&times;</p>
 	</div>
 	<div class="container">
 		<section id="list-section">
 			<div id="list-section-header">
-				<h1>
-					Todo List
-				</h1>
 				<h2>
 					Don't hesitate to leave something undone. We will remind you Todo it!
 				</h2>
@@ -33,9 +30,10 @@
 		</section>
 		<section id="add-todo">
 			<input type="text" placeholder="Name" id="name-input">
-			<input type="text" placeholder="Description" id="description-input">
+			<textarea name="" id="description-input">Add a description...</textarea>
 			<input type="submit" value="Add" id="submit-button">
 		</section>
+	</div>
 	<script src="js/code.js"></script>
 </body>
 </html>
