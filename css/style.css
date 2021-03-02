@@ -1,4 +1,3 @@
-/* reset */
 *{
 	margin: 0;
 	padding: 0;
@@ -7,218 +6,360 @@
 }
 
 body{
-	background-color: #f1f3f4;
+	background-color: #212121;
 }
+
+/* Modal box styling */
 
 #modal-box{
-	display: none;
-	z-index: 1;
-	position: fixed;
-	left: 0;
-	top: 0;
-	background-color: #000;
-	background-color: rgba(0, 0, 0, 0.98);
 	height: 100%;
 	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	background-color: rgba(0, 0, 0, 0.95);
 	color: #fff;
+	font-size: 1.2rem;
+	z-index: 1;
+	overflow: auto;
+	display: none;
 }
 
-#modal-info-box{
-	margin: 85px 5% 0 5%;
-	border-top: 1px solid #fff;
-	font-size: 1.5rem;
-	padding: 50px;
-}
-
-.modal-info-element{
-	margin-bottom: 20px;
-}
-
-.modal-info-element:last-child{
-	margin-bottom: 0;
-}
-
-.modal-category{
-	font-family: 'Times New Roman', Times, serif;
-	margin-right: 20px;
-	color: #ddd;
+.modal-content{
+	margin-top: 50px;
+	margin-left: 30px;
+	border-left: 2px solid white;
+	padding-left: 30px;
+	margin-right: 30px;
 }
 
 #modal-close{
 	position: absolute;
 	top: 15px;
-	right: 30px;
-	color: rgba(255, 255, 255, 0.5);
-	font-size: 3rem;
-	transition: color 0.6s;
+	right: 25px;
+	font-size: 50px;
+	transition: opacity 0.6s;
+	opacity: 0.5;
 }
 
-#modal-close:hover{
+#modal-previous{
+	position: absolute;
+	top: 11px;
+	right: 100px;
+	font-size: 50px;
+	transition: opacity 0.6s;
+	opacity: 0.5;
+}
+
+#modal-next{
+	position: absolute;
+	top: 11px;
+	right: 70px;
+	font-size: 50px;
+	transition: opacity 0.6s;
+	opacity: 0.5;
+}
+
+#modal-close:hover, #modal-previous:hover, #modal-next:hover{
 	cursor: pointer;
-	color: #fff;
+	opacity: 1;
 }
 
-/* container class that defines lateral margins mostly */
+.modal-group{
+	margin-bottom: 50px;
+}
+
+.modal-label{
+	margin-bottom: 10px;
+	color: #eee;
+	font-size: 1.3rem;
+}
+
+.modal-property{
+	margin-left: 15px;
+}
+
+.date-hint{
+	margin-left: 10px;
+	color: #ccc;
+}
+
+/* Modal box styling ends */
+
 .container{
+	width: 100%;
 	max-width: 900px;
-	width: 90%;
-	margin: 0 auto;
+	margin: auto;
 }
 
-#list-section{
-	margin-top: 100px;
-	padding: 20px;
-	border-radius: 10px;
-	background-color: #045f50;
-	font-family: Arial, Helvetica, sans-serif;
-	color: white;
+.header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #c3d1d8;
+	border: 3px solid #787878;
+	border-bottom: none;
+	padding: 20px 20px 50px 20px;
+	border-radius: 20px 20px 0 0;
 }
 
-#list-section-header{
-	margin-bottom: 40px;
-}
-
-#list-section-header h2{
+#list-length{
+	font-family: Georgia, 'Times New Roman', Times, serif;
 	font-size: 1.5rem;
 	font-weight: 500;
-	padding-bottom: 10px;
-	border-bottom: 2px solid #fff;
 }
 
-#no-task-info{
-	font-size: 1.2rem;
-}
-
-#task-list{
-	list-style-type: none;
-	display: none;
-}
-
-.list-item{
-	font-size: 1.2rem;
-	display: flex;
-	width: 0;
-	justify-content: space-between;
-	transition: width 1.2s;
-	align-items: center;
-	background-color: #43b38d;
-	border-radius: 10px;
-}
-
-.check-button{
-	overflow: hidden;
-	color: rgba(0, 0, 0, 0.3);
-	font-weight: bold;
-	padding: 0 10px;
-	transition: color 0.6s;
-}
-
-.check-button:hover{
-	cursor: pointer;
-	color: #76ff03;
-}
-.text-span-wrapper{
-	width: 100%;
-	padding: 15px;
-	transition: background-color 0.6s;
-}
-
-.text-span-wrapper:hover{
-	cursor: pointer;
-	background-color: #2aa17a;
-}
-
-.text-span{
-	display: block;
-	height: calc(1.2rem + 2px);
-	overflow: hidden;
-}
-
-.close-button{
-	overflow: hidden;
-	color: rgba(0, 0, 0, 0.3);
-	visibility: hidden;
-	transition: color 0.6s;
-	padding: 0 10px;
-}
-
-.close-button:hover{
-	cursor: pointer;
-	color: #333;
-}
-
-#task-list li{
-	margin-bottom: 3px;
-}
-
-#task-list li:last-child{
-	margin-bottom: 0;
-}
-
-
-
-
-
-
-
-
-
-
-#add-todo{
-	margin-top: 5px;
-	padding: 20px;
-	border-radius: 10px;
-	background-color: #43b38d;
-	display: flex;
-	flex-direction: column;
-}
-
-input, textarea{
+#sort-select{
+	padding: 10px 5px;
+	font-size: 1rem;
+	border-radius: 15px;
 	outline: none;
-	padding: 15px;
-	font-size: 1.2rem;
-	border-radius: 10px;
-	border: none;
-	margin-bottom: 20px;
-	display: block;
-	border: 2px solid #43b38d;
+	border: 1px solid #ccc;
 }
 
-input[type='text']{
+#sort-select:hover{
+	cursor: pointer;
+}
+
+#to-do-list{
+	list-style-type: none;
+	background-color: #c3d1d8;
+	padding: 0 20px 20px;
+	border: 3px solid #787878;
+	border-top: none;
+	border-bottom: none;
+}
+
+#to-do-list li{
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	background-color: #f1f3f4;
+	border-radius: 15px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+}
+
+#to-do-list li:last-child{
+	margin-bottom: 20px;
+}
+
+.check-span{
+	padding: 0 10px;
+	transition: color 0.6s;
+	color: rgba(0, 0, 0, 0.4);
+	font-weight: bold;
+}
+
+.check-span:hover{
+	cursor: pointer;
+	color: #000;
+}
+
+.to-do-element{
 	width: 100%;
+	padding: 15px 5px;
+	height: 50px;
+	overflow: hidden;
+	transition: background-color 0.6s;
+	font-size: 1.1rem;
+}
+
+.to-do-text{
+	overflow: hidden;
+	display: block;
+	max-height: 20px;
+}
+
+.to-do-element:hover{
+	cursor: pointer;
+	background-color: #dadee0;
+}
+
+.close-span{
+	padding: 0 10px;
+	font-size: 1.3rem;
+	transition: color 0.6s;
+	color: rgba(0, 0, 0, 0.4);
+}
+
+.close-span:hover{
+	cursor: pointer;
+	color: #000;
+}
+
+#to-do-list .late-to-do{
+	background-color: rgb(252, 166, 166);
+}
+
+#to-do-list .late-to-do-element:hover{
+	background-color: rgb(248, 144, 144);
+}
+
+#to-do-list .complete-to-do{
+	background-color: rgb(219, 252, 166);
+}
+
+#to-do-list .complete-to-do-element:hover{
+	background-color: rgb(194, 228, 141);
+}
+
+
+/* to-do input styling */
+
+#input-section{
+	position: relative;
+	background-color: #99adb8;
+	color: white;
+	padding: 20px;
+	border: 3px solid #787878;
+	border-top: none;
+	border-radius: 0 0 20px 20px;
+}
+
+/* Arrow in bottom right corner */
+#expand-input{
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	font-size: 20px;
+	transition: color 0.3s;
+}
+
+#expand-input:hover{
+	cursor: pointer;
+	color: #ccc;
+}
+
+
+/* Styling first input */
+
+label{
+	display: block;
+	font-size: 1.1rem;
+	margin-bottom: 10px;
+}
+
+#name-input{
+	display: block;
+	width: 100%;
+	padding: 15px 10px;
+	font-size: 1.1rem;
+	border-radius: 15px;
+	border: 1px solid #ccc;
+	outline: none;
+}
+
+.wrong-input{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	visibility: hidden;
+	color: rgb(255, 67, 67);
 }
 
 textarea{
+	display: block;
 	width: 100%;
-	height: 150px;
-	color: #777;
+	padding: 15px 10px;
+	font-size: 1.1rem;
+	border-radius: 15px;
+	border: 1px solid #ccc;
+	outline: none;
 	resize: none;
 }
 
-input[type='text']:hover, textarea:hover, input[type='text']:focus, textarea:focus{
-	border: 2px solid #333;
+input:hover, textarea:hover, #sort-select:hover{
+	border: 1px solid #f6fcff;
+	box-shadow: 1px 1px 2px #fff, -1px -1px 2px #fff;
 }
 
-#submit-button{
-	width: 100px;
-	background-color: #6a1b9a;
-	color: #fff;
-	transition: background-color 0.6s, width 0.8s;
+input:focus, textarea:focus, #sort-select:focus{
+	border: 1px solid #f6fcff;
+	box-shadow: 1px 1px 2px #fff, -1px -1px 2px #fff;
+}
+
+#time-date-wrapper{
+	display: flex;
+	margin-top: 20px;
+	align-items: center;
+}
+
+#time-date-wrapper label{
+	margin-bottom: 0;
+	margin-right: 20px;
+}
+
+#time-date-wrapper input{
+	display: block;
+	padding: 10px;
+	font-size: 1.1rem;
+	border-radius: 15px;
+	border: 1px solid #ccc;
+	outline: none;
+}
+
+#extra-input{
+	height: 0;
+	overflow: hidden;
+	transition: height 1s;
+}
+
+
+/* Button styling */
+#add-button{
+	display: block;
+	margin: auto;
+	margin-top: 20px;
+	font-size: 1.1rem;
+	padding: 10px 15px;
+	background-color: coral;
 	border: none;
-	margin: 0 auto;
+	width: fit-content;
+	color: white;
+	border-radius: 15px;
+	outline: none;
+	transition: background-color 0.6s;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
 }
 
-#submit-button:hover{
+#add-button:hover{
 	cursor: pointer;
-	width: 100%;
-	background-color: #470b6d;
+	background-color: rgb(248, 87, 29);
 }
 
-/* Ya
-con
-esto
-si
-se
-puede
-trabajar
-*/
+@media(max-width: 500px){
+	.modal-content{
+		margin-left: 20px;
+		padding-left: 0;
+		border-left: none;
+		margin-right: 20px;
+	}
+	#modal-previous{
+		right: 80px;
+	}
+	#modal-next{
+		right: 60px;
+	}
+	.header{
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding-bottom: 20px;
+	}
+	#list-length{
+		margin-bottom: 20px;
+	}
+	#time-date-wrapper{
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	#time-date-wrapper #date-time-label{
+		margin-bottom: 10px;
+	}
+	#time-input{
+		margin-bottom: 5px;
+	}
+}
+
+@media(max-width: 300px){
+}

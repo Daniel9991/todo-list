@@ -3,37 +3,72 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/style.css">
-	<title>Todo List</title>
+	<link rel="stylesheet" href="style.css">
+	<title>To-do List</title>
 </head>
 <body>
 	<div id="modal-box">
-		<div id="modal-info-box">
-			<p id="modal-name" class="modal-info-element"></p>
-			<p id="modal-state" class="modal-info-element"></p>
-			<p id="modal-added-date" class="modal-info-element"></p>
-			<p id="modal-description" class="modal-info-element"></p>
+		<div class="modal-content">
+			<div id="modal-close">&times;</div>
+			<div id="modal-previous">&#8249;</div>
+			<div id="modal-next">&#8250;</div>
+			<div class="modal-group">
+				<div class="modal-label">Name</div>
+				<div id="modal-name" class="modal-property">Some name</div>
+			</div>
+			<div class="modal-group">
+				<div class="modal-label">Description</div>		
+				<div id="modal-description" class="modal-property">Some description</div>
+			</div>
+			<div class="modal-group">
+				<div class="modal-label">Complete</div>
+				<div id="modal-complete" class="modal-property">false</div>
+			</div>
+			<div class="modal-group">
+				<div class="modal-label">Creation Date</div>
+				<div id="modal-creation-date" class="modal-property">Some date</div>
+			</div>
+			<div class="modal-group">
+				<div class="modal-label">Due Date</div>
+				<div id="modal-due-date" class="modal-property">Some other date</div>
+			</div>
 		</div>
-		<p id="modal-close">&times;</p>
 	</div>
 	<div class="container">
-		<section id="list-section">
-			<div id="list-section-header">
-				<h2>
-					Don't hesitate to leave something undone. We will remind you Todo it!
-				</h2>
+		<header class="header">
+			<h3 id="list-length">You are to-do free</h3>
+			<div>
+				<span>Sort by:</span>
+				<select id="sort-select">
+					<option value="creation_date-oldest">Created-oldest</option>
+					<option value="creation_date-newest">Created-newest</option>
+					<option value="due_date-first">Due-first</option>
+					<option value="due_date-last">Due-last</option>
+					<option value="name-ascending">Name-ascending</option>
+					<option value="name-descending">Name-descending</option>
+				</select>
 			</div>
-			<p id="no-task-info" class="todo-element">
-				You have nothing pending :)
-			</p>
-			<ul id="task-list"></ul>
-		</section>
-		<section id="add-todo">
-			<input type="text" placeholder="Name" id="name-input">
-			<textarea name="" id="description-input">Add a description...</textarea>
-			<input type="submit" value="Add" id="submit-button">
+		</header>
+		<ul id="to-do-list">
+		</ul>
+		<section id="input-section">
+			<div id="expand-input">&#8891;</div>
+			<label>Enter a name</label>
+			<input type="text" id="name-input">
+			<div id="wrong-name-input" class="wrong-input"></div>
+			<div id="extra-input">
+				<label>Enter some description</label>
+				<textarea id="description-input"></textarea>
+				<div id="time-date-wrapper">
+					<label id="date-time-label">Select a due date</label>
+					<input type="time" id="time-input">
+					<input type="date" id="date-input">
+				</div>
+				<div id="wrong-date-input" class="wrong-input"></div>
+			</div>
+			<input type="submit" value="Add to-do" id="add-button">
 		</section>
 	</div>
-	<script src="js/code.js"></script>
+	<script src="code.js"></script>	
 </body>
 </html>
